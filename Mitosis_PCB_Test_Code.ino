@@ -9,7 +9,6 @@ class StepperMotor {
   const double anglePerStep;
   const int stepsPerRevolution;
   bool direction;  // Motor direction (clockwise or counterclockwise)
-  static int motorCount;  // Static to keep track of the number of motors
   int motorIndex;  
   // Global shift register control data
   byte shiftRegisterData = 0;
@@ -19,7 +18,6 @@ class StepperMotor {
   StepperMotor(int stepsPerRevolution = 200) 
     : stepsPerRevolution(stepsPerRevolution), anglePerStep(360.0 / stepsPerRevolution), 
     angle(0), direction(true) {  // Clockwise by default
-    motorIndex = motorCount++;
   }
   
   // Spin motor in a clockwise direction
@@ -118,7 +116,4 @@ void loop() {
   Serial.println("Moving X axis to angle...");
   motorX.setAngle(degree);  // Move X axis motor to the entered degree
   }
-
-  // Similarly, you can control motorY and motorZ by creating additional prompts
-  // and calls to motorY.setAngle() and motorZ.setAngle() here.
 }
