@@ -12,6 +12,7 @@ class StepperMotor {
   int motorIndex;  
   // Global shift register control data
   byte shiftRegisterData = 0;
+  byte motors;
   
   public: 
   // Constructor with steps per revolution
@@ -55,6 +56,16 @@ class StepperMotor {
   
     this->angle = newAngle;
   }
+
+  // set motor enables
+  void setMotors() 
+  {
+    //right now this just sets bit 0 but change it to do more.
+    motors = 0;
+    updateShiftRegister();
+    bitSet(motors, 0);
+    updateShiftRegister();
+  }
   
   private:
   // Convert angle to number of steps
@@ -89,6 +100,16 @@ class StepperMotor {
     updateShiftRegister();
   }
 };
+
+/*
+ * updateShiftRegister() - This function sets the latchPin to low, then calls the Arduino function 'shiftOut' to shift out contents of variable 'leds' in the shift register before putting the 'latchPin' high again.
+ */
+void updateShiftRegister()
+{
+   digitalWrite(latchPin, LOW);
+   shiftOut(dataPin, clockPin, MSBFIRST, leds);
+   digitalWrite(latchPin, HIGH);
+}
 
 // Static variable initialization
 int StepperMotor::motorCount = 0;
