@@ -17,11 +17,13 @@ class StepperMotor
   
   public: 
     // Constructor with steps per revolution
-    StepperMotor(int stepsPerRevolution = 200) : 
+    StepperMotor(int stepsPerRevolution = 200, int step, int dir) : 
       stepsPerRevolution(stepsPerRevolution), 
       anglePerStep(360.0 / stepsPerRevolution), 
       angle(0), 
-      direction(true) 
+      direction(true),
+      stepPin(step),
+      dirPin(dir)
     {  // Clockwise by default
       pinMode(stepPin, OUTPUT);
       pinMode(dirPin, OUTPUT);
@@ -108,9 +110,7 @@ class StepperMotor
 int StepperMotor::motorCount = 0;
 
 // Create three motor instances for X, Y, and Z axes
-StepperMotor motorX(200);  // Motor X
-StepperMotor motorY(200);  // Motor Y
-StepperMotor motorZ(200);  // Motor Z
+StepperMotor motorX(200, 9, 8);  // Motor X
 
 void setup() {
   // Initialize shift register pins
